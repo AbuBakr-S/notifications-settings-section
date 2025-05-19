@@ -1,3 +1,6 @@
+"use client"
+
+import Toggle from "./Toggle";
 import { Noto_Sans } from "next/font/google";
 
 const notoSans = Noto_Sans({
@@ -48,7 +51,7 @@ export default function Home() {
                     {CHANNELS.map((channel) => (
                       // TODO: Replace with a Reusable Toggle Component
                       <td key={channel} className="text-center">
-                        Toggle
+                        <Toggle checked={false} />
                       </td>
                     ))}
                   </tr>
