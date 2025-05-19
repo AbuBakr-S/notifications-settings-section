@@ -21,7 +21,7 @@ const CHANNELS = ["Push", "Email", "SMS"];
 
 export default function Home() {
   return (
-    <div className={`${notoSans.className} px-4 mt-16`}>
+    <div className={`${notoSans.className} px-4 mt-16 w-full min-w-[375px]`}>
       <div>
         <h1 className="text-xl font-semibold">Manage Your Notifications</h1>
         <p className="text-sm font-normal text-neutral-500 mt-2">
