@@ -47,10 +47,10 @@ export default function Home() {
               <tbody>
                 {NOTIFICATIONS.map(({ id, label }) => (
                   <tr key={id} className="first:border-t border-neutral-200">
-                    <td className="max-w-36 pt-4">{label}</td>
+                    <td className="max-w-36 align-top pt-4">{label}</td>
                     {CHANNELS.map((channel) => (
                       // TODO: Replace with a Reusable Toggle Component
-                      <td key={channel} className="text-center">
+                      <td key={channel} className="text-center align-top pt-4">
                         <Toggle checked={false} />
                       </td>
                     ))}
