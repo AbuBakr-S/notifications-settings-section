@@ -15,8 +15,8 @@ export default function Toggle ({ checked: initialChecked }: ToggleProps) {
   return (
     <button
       onClick={handleClick}
-      className={`relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none ${
-        checked ? "bg-blue-600" : "bg-gray-300"
+      className={`bg-red-500relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out hover:bg-gray-300 ${
+        checked ? "bg-indigo-700 hover:bg-indigo-800 focus:ring-4 focus:ring-[rgba(68,76,231,0.12)]" : "bg-gray-200 focus:ring-4 focus:ring-[rgba(157,164,174,0.2)]"
       }`}
     >
       <span
