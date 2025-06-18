@@ -158,11 +158,13 @@ export default function Home() {
 
           <div className="flex justify-end items-center h-[80px]">
             <button
-              className={`w-[176px] h-[48px] bg-neutral-100`}
+              className="w-[176px] h-[48px] rounded focus:outline-none 
+                      bg-indigo-700 text-white hover:bg-indigo-800 focus:ring-4 focus:ring-[#E9EAFC]
+                      disabled:bg-neutral-100 disabled:text-neutral-400"
               type="submit"
               disabled={saving}
             >
-              {saving ? "Saving..." : "Save Changes"}
+              {"Save Changes"}
             </button>
           </div>
 
