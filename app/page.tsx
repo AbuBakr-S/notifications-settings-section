@@ -37,9 +37,10 @@ interface PreferencesResponse {
 
 export default function Home() {
   const [preferences, setPreferences] = useState<PreferencesResponse | null>(null);
+  const [saving, setSaving] = useState(false);
   // TODO: Implement loading state and error state handling
-  // const [error, setError] = useState<string | null>(null);
-  // const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     async function fetchPreferences() {
@@ -48,12 +49,13 @@ export default function Home() {
         if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
         const data = await res.json();
         setPreferences(data)
-      } catch {
-        // setError("Error with fetching");
+      } catch (err) {
+        setError("Error with fetching");
+        console.error(err)
       } 
-      // finally {
-      //   setLoading(false);
-      // }
+      finally {
+        setLoading(false);
+      }
     }
 
     fetchPreferences()
@@ -78,6 +80,30 @@ export default function Home() {
     []
   );
 
+  const handleSave = useCallback(async () => {
+    if (!preferences) return;
+
+    setSaving(true);
+    setError(null);
+
+    try {
+      const res = await fetch("https://www.greatfrontend.com/api/projects/challenges/account/notifications", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(preferences),
+      });
+
+      if (!res.ok) throw new Error("Failed to save preferences");
+    } catch (err) {
+      setError("Could not save changes");
+      console.error(err);
+    } finally {
+      setSaving(false);
+    }
+  }, [preferences]);
+
   return (
     <div className={`${notoSans.className} px-4 mt-16 w-full min-w-[375px]`}>
       <div>
@@ -86,7 +112,12 @@ export default function Home() {
           Choose how you want to be notified about the latest updates and
           messages.
         </p>
-        <form>
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            handleSave();
+          }}
+        >
           <div className="mb-6">
             <table className="mt-8 w-full text-sm">
               <thead>
@@ -113,6 +144,7 @@ export default function Home() {
                             preferences?.preferences?.[id]?.[channel] ?? false
                           }
                           onChange={(newValue: boolean) => handleToggle(id, channel, newValue)}
+                          disabled={loading || saving}
                         />
                       </td>
                     ))}
@@ -122,12 +154,15 @@ export default function Home() {
             </table>
           </div>
 
+          {error && <p className="pt-4 text-red-600">{error}</p>}
+
           <div className="flex justify-end items-center h-[80px]">
             <button
-              className="w-[176px] h-[48px] bg-neutral-100"
+              className={`w-[176px] h-[48px] bg-neutral-100`}
               type="submit"
+              disabled={saving}
             >
-              Save Changes
+              {saving ? "Saving..." : "Save Changes"}
             </button>
           </div>
 
