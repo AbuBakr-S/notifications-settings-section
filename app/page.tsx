@@ -1,7 +1,7 @@
 "use client"
 
 import Toggle from "./Toggle";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Noto_Sans } from "next/font/google";
 
 const notoSans = Noto_Sans({
@@ -59,6 +59,25 @@ export default function Home() {
     fetchPreferences()
   }, []);
 
+  const handleToggle = useCallback(
+    (type: NotificationId, channel: Channel, value: boolean) => {
+      setPreferences((prev) =>
+        prev
+          ? {
+              preferences: {
+                ...prev.preferences,
+                [type]: {
+                  ...prev.preferences[type],
+                  [channel]: value,
+                },
+              },
+            }
+          : prev
+      );
+    },
+    []
+  );
+
   return (
     <div className={`${notoSans.className} px-4 mt-16 w-full min-w-[375px]`}>
       <div>
@@ -93,6 +112,7 @@ export default function Home() {
                           checked={
                             preferences?.preferences?.[id]?.[channel] ?? false
                           }
+                          onChange={(newValue: boolean) => handleToggle(id, channel, newValue)}
                         />
                       </td>
                     ))}
