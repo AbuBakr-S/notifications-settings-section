@@ -105,7 +105,7 @@ export default function Home() {
   }, [preferences]);
 
   return (
-    <div className={`${notoSans.className} px-4 mt-16 w-full min-w-[375px]`}>
+    <div className={`${notoSans.className} px-4 md:px-8 mt-16 w-full min-w-[375px] md:w-[581px]`}>
       <div>
         <h1 className="text-xl font-semibold">Manage Your Notifications</h1>
         <p className="text-sm font-normal text-neutral-500 mt-2">
