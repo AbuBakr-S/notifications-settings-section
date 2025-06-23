@@ -39,8 +39,6 @@ interface PreferencesResponse {
 export default function Home() {
   const [preferences, setPreferences] = useState<PreferencesResponse | null>(null);
   const [saving, setSaving] = useState(false);
-  // TODO: Implement loading state and error state handling
-  const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [toast, setToast] = useState<{ type: "success" | "error"; message: string } | null>(null);
 
@@ -52,7 +50,7 @@ export default function Home() {
         const data = await res.json();
         setPreferences(data)
       } catch (err) {
-        setError("Error with fetching");
+        setToast({ type: "error", message: "Unexpected error. Please try again later or contact support." });
         console.error(err)
       } 
       finally {
@@ -86,7 +84,6 @@ export default function Home() {
     if (!preferences) return;
 
     setSaving(true);
-    setError(null);
 
     try {
       const res = await fetch("https://www.greatfrontend.com/api/projects/challenges/account/notifications", {
@@ -100,7 +97,6 @@ export default function Home() {
       if (!res.ok) throw new Error("Failed to save preferences");
       setToast({ type: "success", message: "Changes saved successfully" });
     } catch (err) {
-      setError("Could not save changes");
       setToast({ type: "error", message: "Unexpected error. Please try again later or contact support." });
       console.error(err);
     } finally {
