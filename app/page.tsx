@@ -49,9 +49,8 @@ export default function Home() {
         if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
         const data = await res.json();
         setPreferences(data)
-      } catch (err) {
+      } catch {
         setToast({ type: "error", message: "Unexpected error. Please try again later or contact support." });
-        console.error(err)
       } 
       finally {
         setLoading(false);
