@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client"
 
 import Toggle from "./Toggle";
@@ -49,7 +50,7 @@ export default function Home() {
         if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
         const data = await res.json();
         setPreferences(data)
-      } catch {
+      } catch (_error) {
         setToast({ type: "error", message: "Unexpected error. Please try again later or contact support." });
       } 
       finally {
@@ -95,7 +96,7 @@ export default function Home() {
 
       if (!res.ok) throw new Error("Failed to save preferences");
       setToast({ type: "success", message: "Changes saved successfully" });
-    } catch {
+    } catch (_error) {
       setToast({ type: "error", message: "Unexpected error. Please try again later or contact support." });
     } finally {
       setSaving(false);
