@@ -96,9 +96,8 @@ export default function Home() {
 
       if (!res.ok) throw new Error("Failed to save preferences");
       setToast({ type: "success", message: "Changes saved successfully" });
-    } catch (err) {
+    } catch {
       setToast({ type: "error", message: "Unexpected error. Please try again later or contact support." });
-      console.error(err);
     } finally {
       setSaving(false);
     }
